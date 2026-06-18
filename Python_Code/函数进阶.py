@@ -87,30 +87,30 @@
 # 注意:参数是以"键=值"形式传递的关键字参数，这些"键=值"参数都会被kwargs接受，并合并封装为字典类型
 
 
-def calc_data(*args, **kwargs):#args收集位置参数（为元组类型），kwargs收集关键字参数（为字典类型）key:value
-    """
-    计算数据的最小值、最大值、平均值
-    Args:
-        *args: 不定长位置参数，需要计算的这批数据
-        **kwargs: 不定长关键字参数
-            round: 四舍五入的位数
-            print: 是否打印结果
-    """
-    print(args)
-    print(kwargs)
-    min_data = min(args)
-    max_data = max(args)
-    avg_data = sum(args) / len(args)
-    if kwargs.get('round') is not None:
-        avg_data = round(avg_data, kwargs.get('round'))
-    if kwargs.get('print'):
-        print(f"最小值:{min_data}, 最大值:{max_data}, 平均值:{avg_data}")
-    return min_data, max_data, avg_data
+# def calc_data(*args, **kwargs):#args收集位置参数（为元组类型），kwargs收集关键字参数（为字典类型）key:value
+#     """
+#     计算数据的最小值、最大值、平均值
+#     Args:
+#         *args: 不定长位置参数，需要计算的这批数据
+#         **kwargs: 不定长关键字参数
+#             round: 四舍五入的位数
+#             print: 是否打印结果
+#     """
+#     print(args)
+#     print(kwargs)
+#     min_data = min(args)
+#     max_data = max(args)
+#     avg_data = sum(args) / len(args)
+#     if kwargs.get('round') is not None:
+#         avg_data = round(avg_data, kwargs.get('round'))
+#     if kwargs.get('print'):
+#         print(f"最小值:{min_data}, 最大值:{max_data}, 平均值:{avg_data}")
+#     return min_data, max_data, avg_data
 
-data = calc_data(100, 200,300,400, round=2, print=True)#前四个参数是位置参数，round=2是关键字参数，count=0是关键字参数
-print(data)
-data = calc_data(33, 11, 28, 91, 32, 75, 49,round=3, print=True)
-print(data)
+# data = calc_data(100, 200,300,400, round=2, print=True)#前四个参数是位置参数，round=2是关键字参数，count=0是关键字参数
+# print(data)
+# data = calc_data(33, 11, 28, 91, 32, 75, 49,round=3, print=True)
+# print(data)
 
 
 # 1.什么是不定长参数?
@@ -121,3 +121,128 @@ print(data)
 # 3.*args与**kwargs的应用场景?
 #     *args适用于处理数量不确定的数据
 #     **kwargs适用于处理数量不确定的选项(函数的配置参数，用来定制函数的行为)
+
+
+
+
+# 函数的参数类型
+# 普通参数:数字、布尔、字符串、列表、元组、集合、字典等。
+#特殊参数：函数
+
+# def add (x, y):
+#     return x+y
+# def subtract (x, y):
+#     return x-y
+# #乘
+# def multiply (x, y):
+#     return x*y
+# #除
+# def divide (x, y):
+#     return x/y
+
+# def calc(x,y,oper):
+#     return oper(x,y)
+
+# result = calc(10, 20, add)
+# print(result)
+# result = calc(10, 20, subtract)
+# print(result)
+# result = calc(10, 20, multiply)
+# print(result)
+# result = calc(10, 20, divide)
+# print(result)
+
+
+# 匿名函数
+# 匿名函数指的是没有名称的函数，需要通过lambda表达式来声明函数，可以简化简单函数的编写(单行表达式)。
+# 语法:lambda 参数列表: 表达式
+# 例如:lambda x, y: x + y   
+#lambda:print("hello world")
+
+# out_line=lambda : print("-----------------")
+# add = lambda x, y:x + y
+
+# out_line()
+# print(add(100, 200))
+
+#注意:函数逻辑比较简单(单行表达式)且只在一个地方使用时，可以考虑使用匿名函数，简化书写(通常作为高阶函数的参数使用)
+#注意:匿名函数中可以返回结果，也可以不返回结果。返回结果时，不需要写return，表达式的运行结果就是要返回的结果。
+
+# 需求3:完成如下列表的排序操作，按照每一个元素的字符个数，从小到大排序;
+
+# data_list = ["C++", "C", "Python", "Jack", "PHP", "Java","Go","JavaScript","Rust"]
+# data_list.sort(key=lambda item: len(item))
+# data_list.sort(key=lambda item: len(item),reverse=True)
+# #sort原型     sort(*, key=None, reverse=False)默认参数为None   key:排序的依据函数，reverse:是否倒序排序
+# #If a key function is given, apply it once to each list item and sort them, ascending or descending, according to their return values.
+# print(data_list)
+
+
+# 定义一个函数，根据传入的数字，计算该数字阶乘的结果。
+# 分析:
+# 8的阶乘:8* 7* 6*5* 4*3 *2* 1
+
+# def factorial(n):
+#     """
+#     计算阶乘
+#     Args:
+#         n: 阶乘的数字
+#     Returns:
+#         阶乘的结果
+#     """
+#     if n == 0:
+#         return 1
+#     else:
+#         return n * factorial(n-1)    #递归调用，直到n=0，返回1    函数中自己调用自己，直到满足条件，返回结果
+# print(factorial(8))
+
+# 电商订单计算器
+# 定义一个函数，用于根据传入的一批商品信息(商品名、价格、数量)、优惠(优惠券、积分抵扣)、运费信息计算订单的总金额。
+# 具体规则如下:
+# 优惠券需要商品金额满5000才可以使用，且优惠券金额不能超过商品总价。
+# 积分抵扣需要商品总金额满5000才可以使用，100积分抵扣1元(且抵扣金额不能超过商品总价，积分只能整百抵扣)
+
+def calc_order_price(*args, coupon=0,score=0,express=0):
+    """
+    计算订单的总金额
+    Args:
+        *args: 不定长位置参数，需要计算的这批商品信息("鼠标",100,2)(("键盘",100,1))  
+        coupon: 优惠券金额
+        score: 积分抵扣金额
+        express: 运费金额
+    Returns:
+        订单的总金额= 商品总金额 - 优惠券 - 积分抵扣 + 运费
+    """
+
+    #1.计算商品总金额
+    total_price = []
+    for goods in args:
+        # 处理单个商品元组
+        if isinstance(goods, tuple) and len(goods) == 3:
+            total_price.append(goods[1] * goods[2])
+        # 处理直接传入的单个商品参数（如 "鼠标", 100, 2）
+        # 这种情况下需要特殊处理，因为args会是 ("鼠标", 100, 2, ("键盘", 100, 1), ...)
+        # 更好的做法是让所有商品都以元组形式传入
+    total_cost=sum(total_price)
+    #2.扣减优惠券
+    if total_cost >=5000 and coupon <= total_cost:
+        total_cost-=coupon
+    #3.扣减积分抵扣
+    if total_cost >= 5000 and score//100 <= total_cost:    #//取整，确保积分只能整百抵扣
+        total_cost-=score//100
+    #4.加上运费
+    total_cost+=express
+    return total_cost
+
+# total=calc_order_price("鼠标",100,2,("键盘",100,1),("手机",3999,1) ,coupon=100, score=4000, express=9.9)
+# print(total)
+
+total=calc_order_price("鼠标",100,2,("键盘",100,1),("手机",6999,1) ,coupon=100, score=4000, express=9.9)
+print(total)
+
+    
+
+
+
+
+
