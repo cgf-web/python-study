@@ -202,7 +202,7 @@
 # 优惠券需要商品金额满5000才可以使用，且优惠券金额不能超过商品总价。
 # 积分抵扣需要商品总金额满5000才可以使用，100积分抵扣1元(且抵扣金额不能超过商品总价，积分只能整百抵扣)
 
-def calc_order_price(*args, coupon=0,score=0,express=0):
+def calc_order_price(*args:tuple[str,float,int], coupon:float=0,score:float=0,express:float=0):
     """
     计算订单的总金额
     Args:
@@ -241,8 +241,57 @@ total=calc_order_price("鼠标",100,2,("键盘",100,1),("手机",6999,1) ,coupon
 print(total)
 
     
+# 类型注解
+# 类型注解是Python中的一种语法特性，用于明确标识变量、函数参数和返回值的数据类型从而使代码更清晰、更安全、更易读、更易维护。
+# 
+#定义变量
+a:int= 695
+score:float= 98.5
+hobby: str="Python"
+flag:bool= True
+pic: None=None
+names: list[str|int]=["A","C","E"]
+phones:set[str]= {"13309091111", "15209109121"}
+options: dict[str, int]= {"count": 0, "total":0}
+goods: tuple[str,int,int]=("手机",5999,1)
 
 
+names.append(100)
+# 类型推断
+# 类型推断是指Python解释器自动推断出变量、表达式或函数返回值的数据类型的能力，而无需开发者显式声明。
+
+#注意:在对变量进行直接赋值，或者涉及到变量的运算、容器的推导等场景时，解释器会自动推导出变量的类型，而无需开发者显式声明。
 
 
+# 函数-类型注解
+# 为函数添加类型注解，其实主要就是为函数的参数和返回值添加类型注解，具体语法如下:
+# def 函数名(参数1:类型1,参数2:类型2,)->返回值类型:
+#     函数体
+#     return 返回值
+# 
+def calc(scores: list[int])-> float:    #list[int]参数的类型    float返回值的类型
+    """
+    计算列表中所有整数的平均值
+    Args:
+        scores: 包含整数的列表
+    Returns:
+        列表中所有整数的平均值
+    """
+    return sum(scores)/ len(scores)
 
+def calc_data(scores:list[int])-> tuple[int,int, float]:
+    """
+    计算列表中所有整数的最大值、最小值和平均值
+    Args:
+        scores: 包含整数的列表
+    Returns:
+        一个元组，包含列表中所有整数的最大值、最小值和平均值
+    """
+    max_v = max(scores)
+    min_v = min(scores)
+    avg_v = sum(scores)/ len(scores)
+    return max_v, min_v, avg_v  
+avg=calc([1,2,3,4,5])
+print(avg)
+max_v,min_v,avg_v=calc_data([1,2,3,4,5])
+print(max_v,min_v,avg_v)
