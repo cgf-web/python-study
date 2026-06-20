@@ -53,7 +53,7 @@ class Student:
     def __str__(self):#重写__str__方法，返回学生信息   输出格式为:"姓名:张三|语文:85|数学:90|英语:88|总分:263"
         return f"姓名：{self.name}|语文：{self.chinese}|数学：{self.math}|英语：{self.english}|总分：{self.chinese+self.math+self.english}"
 
-    def update_score(self,chinese=None,math=None,english=None):
+    def update_score(self,chinese=None,math=None,english=None):#修改学生成绩
         if chinese is not None:   #如果语文成绩不为空，就修改
             self.chinese=chinese
         if math is not None:
@@ -151,30 +151,58 @@ class EduManagement:
            
         while True:
             menu()
-            print()
+            print()           
             choice=input("请输入您的选择:")
-            if choice=="1":
-                self.add_student()
-            elif choice=="2":
-                self.update_student()
-            elif choice=="3":
-                self.delete_student()
-            elif choice=="4":
-                self.query_student()
-            elif choice=="5":
-                self.show_all_students()
-            elif choice=='0':
-                print("系统退出  Bye~")
-                break
-            else:
-                print("系统运行错误，请重新输入")   
+            try:
+                if choice=="1":
+                    self.add_student()
+                elif choice=="2":
+                    self.update_student()
+                elif choice=="3":
+                    self.delete_student()
+                elif choice=="4":
+                    self.query_student()
+                elif choice=="5":
+                    self.show_all_students()
+                elif choice=='0':
+                    print("系统退出  Bye~")
+                    break
+                else:
+                    print("系统运行错误，请重新输入")   
+            except ValueError as e:
+                print("输入信息有误，请重新输入！：",e)
+            except Exception as e:
+                print("程序运行出错，请联系管理员！：",e)
+
 
 if __name__=="__main__":
     em=EduManagement() #实例化教务管理系统对象
     em.run()
 
 
+# 什么是异常
+# 异常(也称为Bug)就是程序运行过程中出现的错误，它会中断程序的正常执行流程。
 
+# 作用:
+# 保证数据、逻辑的正确性，避免程序执行混乱
+# 在开发阶段，尽量发现更多的问题，尽早解决问题，保障程序正常执行
+# NameError   TypeError   IndexError  KeyError  ValueError
+# 异常不是坏东西，而是编写健壮程序的重要工具
 
+# 异常处理
+# 程序运行过程中出现异常，有两种处理方案:
+# 1.不做处理:整个程序因为一个Bug，中断执行。(之前编程的程序)
+# 2.捕获异常:按照我们自己的处理方式，处理完异常，程序继续执行。(Python的程序异常处理)
 
-    
+try:
+    # 可能出现异常的代码
+    pass
+except Exception as e:     # 捕获所有异常并赋值给变量e，方便输出异常信息
+    # 异常处理代码
+
+    pass
+
+finally:
+    # 无论是否发生异常，都会执行的代码
+    print("释放资源")
+    pass
