@@ -96,40 +96,85 @@ import time, os
 
 
 # 4.使用 add_done_callback 方法，为任务添加完成时的回调函数
+# def work(n):
+#     print(f'work正在执行任务{n}.........{os.getpid()}')
+#     time.sleep(2)
+#     return f'我是任务{n}的结果'
+
+# if __name__ == '__main__':
+#     print('--------------start----------------')
+#     #创建一个进程池执行器
+#     executor = ProcessPoolExecutor(3)
+#     result_list=[]
+
+#     #任务完成后的回调函数
+#     def done_func(future):
+#         result_list.append(future.result())
+    
+#     #开启7个任务,并为每个任务添加完成时的回调函数
+#     for i in range(1, 8):
+#         f=executor.submit(work,i)
+#         f.add_done_callback(done_func)
+
+#     print(result_list)  # 打印每个任务的结果
+
+
+#     #shutdown 的作用:不再接收新的任务。
+#     #wait=True 的作用:阻塞主进程，等待进程池中所有任务执行完毕。
+#     executor.shutdown(wait=True)
+#     print('-----------------end---------------')
+
+
+# 5使用map方法批量提交任务(注意:map方法是阻塞的，并且得到结果的顺序，与任务分配的顺序是一致的)#
+# def work(n):
+#     time.sleep(2)
+#     if n==1:
+#         time.sleep(15)
+#     elif n==2:
+#         time.sleep(10)
+#     else:
+#         time.sleep(1)
+#     return f'我是任务{n}的结果'
+
+# if __name__ == '__main__':
+#     print('---------start-------------')
+#     #创建一个进程池执行器
+#     executor = ProcessPoolExecutor(3)
+  
+#     #开启7个任务，并指定回调函数
+#     #通过 map 方法批量提交任务(结果按照提交的顺序来)
+#     results=executor.map(work, range(1, 8))
+    
+#     for result in results:
+#         print(result)
+#     #等所有任务都完成
+#     executor.shutdown(wait=True)
+#     print('------------end------------')
+
+
 def work(n):
-    print(f'work正在执行任务{n}.........{os.getpid()}')
     time.sleep(2)
+    if n==1:
+        time.sleep(15)
+    elif n==2:
+        time.sleep(10)
+    else:
+        time.sleep(1)
     return f'我是任务{n}的结果'
 
 if __name__ == '__main__':
-    print('--------------start----------------')
+    print('---------start-------------')
+
     #创建一个进程池执行器
-    executor = ProcessPoolExecutor(3)
-    result_list=[]
-
-    #任务完成后的回调函数
-    def done_func(future):
-        result_list.append(future.result())
-    
-    #开启7个任务,并为每个任务添加完成时的回调函数
-    for i in range(1, 8):
-        f=executor.submit(work,i)
-        f.add_done_callback(done_func)
-
-    print(result_list)  # 打印每个任务的结果
-
-
-    #shutdown 的作用:不再接收新的任务。
-    #wait=True 的作用:阻塞主进程，等待进程池中所有任务执行完毕。
+    with ProcessPoolExecutor(3) as executor:
+        #开启7个任务，并指定回调函数
+        #通过 map 方法批量提交任务(结果按照提交的顺序来)
+        results=executor.map(work, range(1, 8))
+        for result in results:
+            print(result)
+    #等所有任务都完成
     executor.shutdown(wait=True)
-    print('-----------------end---------------')
-
-
-
-
-
-
-
+    print('------------end------------')
 
 
 
